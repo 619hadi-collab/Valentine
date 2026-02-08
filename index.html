@@ -55,6 +55,7 @@
         color: #d14f6c;
         margin-bottom: 20px;
         font-size: 20px;
+        transition: opacity 0.5s;
     }
 
     /* Envelope */
@@ -141,6 +142,7 @@
         display: none;
         position: relative;
         text-align: left;
+        transition: transform 0.5s;
     }
 
     .flower {
@@ -161,6 +163,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        max-width: 90vw;
     }
 
 </style>
@@ -168,8 +171,8 @@
 <body>
 
 <div class="container">
-    <div class="envelope-text">
-        💌 This is for Maha ❤️ from Hadi 🌹
+    <div class="envelope-text" id="envelopeText">
+        💌 For Maha ❤️ from Hadi 🌹
     </div>
     <div class="envelope" id="envelope"></div>
 
@@ -189,18 +192,23 @@
     </div>
 
     <div class="no-message" id="noMessage">
-        😡 Why would you do that? I love you…<br>
+        😡 Apne NO kese kiya yk I love you alot<br>
         Come on, say Yes!
+        <div style="margin-top:20px;">
+            <button class="yes" id="yesBtn2">Yes</button>
+        </div>
     </div>
 </div>
 
 <script>
     const envelope = document.getElementById('envelope');
+    const envelopeText = document.getElementById('envelopeText');
     const letter = document.getElementById('letter');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const finalLetter = document.getElementById('finalLetter');
     const noMessage = document.getElementById('noMessage');
+    const yesBtn2 = document.getElementById('yesBtn2');
     const body = document.body;
 
     // Envelope click → show first letter
@@ -216,35 +224,56 @@
 
     // Yes click → show final romantic letter
     yesBtn.addEventListener('click', () => {
+        showFinalLetter();
+    });
+
+    yesBtn2.addEventListener('click', () => {
+        showFinalLetter();
+        noMessage.style.display = 'none';
+    });
+
+    function showFinalLetter() {
         letter.style.transform = 'scale(0)';
+        envelopeText.style.opacity = 1;
+        body.style.background = '#ffe6f0';
         setTimeout(() => {
             letter.style.display = 'none';
             finalLetter.style.display = 'block';
             finalLetter.style.transform = 'scale(0)';
             setTimeout(() => finalLetter.style.transform = 'scale(1)', 50);
         }, 500);
-    });
+    }
 
-    // No click → screen red + message
+    // No click → red screen + message + hide envelope text
     noBtn.addEventListener('click', () => {
         letter.style.display = 'none';
+        envelopeText.style.opacity = 0;
         body.style.background = '#ff4d4d';
         noMessage.style.display = 'block';
+        createHearts('red');
     });
 
     // Floating hearts
-    for (let i = 0; i < 30; i++) {
-        let heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (4 + Math.random() * 6) + 's';
-        let size = 10 + Math.random() * 20;
-        heart.style.width = size + 'px';
-        heart.style.height = size + 'px';
-        heart.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 85%)`;
-        heart.style.opacity = Math.random() * 0.7 + 0.3;
-        document.body.appendChild(heart);
+    function createHearts(color='hsl(330,70%,85%)'){
+        // Remove existing hearts
+        document.querySelectorAll('.heart').forEach(h => h.remove());
+        for (let i = 0; i < 30; i++) {
+            let heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (4 + Math.random() * 6) + 's';
+            let size = 10 + Math.random() * 20;
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            heart.style.backgroundColor = color;
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+            document.body.appendChild(heart);
+        }
     }
+
+    // Initial pastel hearts
+    createHearts();
+
 </script>
 
 </body>
