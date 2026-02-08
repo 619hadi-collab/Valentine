@@ -52,6 +52,14 @@
         position: relative;
     }
 
+    /* Envelope text above */
+    .envelope-text {
+        font-weight: bold;
+        color: #d14f6c;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
     /* Envelope */
     .envelope {
         width: 200px;
@@ -61,11 +69,6 @@
         margin: auto;
         cursor: pointer;
         border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        color: #d14f6c;
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         transition: transform 0.5s;
     }
@@ -81,6 +84,7 @@
         border-radius: 10px 10px 0 0;
     }
 
+    /* Letter */
     .letter {
         width: 250px;
         height: 200px;
@@ -94,6 +98,7 @@
         color: #d14f6c;
         position: relative;
         z-index: 20;
+        transition: transform 0.5s;
     }
 
     .buttons {
@@ -128,9 +133,10 @@
 <body>
 
 <div class="container">
-    <div class="envelope" id="envelope">
+    <div class="envelope-text">
         💌 This is for Maha ❤️ from Hadi 🌹
     </div>
+    <div class="envelope" id="envelope"></div>
     <div class="letter" id="letter">
         Will you be my Valentine?
         <div class="buttons">
@@ -160,14 +166,20 @@
         alert("YYAAAY I love you ❤️🌹");
     });
 
-    noBtn.addEventListener('mouseenter', () => {
-        let currentScale = parseFloat(window.getComputedStyle(noBtn).transform.split(',')[0]) || 1;
-        noBtn.style.transform = `scale(${currentScale * 0.8})`;
+    // Yes grows on hover
+    yesBtn.addEventListener('mouseenter', () => {
+        yesBtn.style.transform = 'scale(1.5)';
+    });
+    yesBtn.addEventListener('mouseleave', () => {
+        yesBtn.style.transform = 'scale(1)';
     });
 
-    yesBtn.addEventListener('mouseenter', () => {
-        let currentScale = parseFloat(window.getComputedStyle(yesBtn).transform.split(',')[0]) || 1;
-        yesBtn.style.transform = `scale(${currentScale * 1.2})`;
+    // No shrinks on hover
+    noBtn.addEventListener('mouseenter', () => {
+        noBtn.style.transform = 'scale(0.5)';
+    });
+    noBtn.addEventListener('mouseleave', () => {
+        noBtn.style.transform = 'scale(1)';
     });
 
     // Generate floating hearts
