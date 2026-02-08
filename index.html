@@ -16,6 +16,7 @@
         align-items: center;
         background: #ffe6f0;
         position: relative;
+        transition: background 0.5s;
     }
 
     /* Floating hearts */
@@ -149,6 +150,19 @@
         text-align: center;
     }
 
+    /* No message */
+    .no-message {
+        display: none;
+        font-size: 24px;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
 </style>
 </head>
 <body>
@@ -173,6 +187,11 @@
         With love,<br>
         Hadi
     </div>
+
+    <div class="no-message" id="noMessage">
+        😡 Why would you do that? I love you…<br>
+        Come on, say Yes!
+    </div>
 </div>
 
 <script>
@@ -181,6 +200,8 @@
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const finalLetter = document.getElementById('finalLetter');
+    const noMessage = document.getElementById('noMessage');
+    const body = document.body;
 
     // Envelope click → show first letter
     envelope.addEventListener('click', () => {
@@ -204,9 +225,11 @@
         }, 500);
     });
 
-    // No click → shrink the No button
+    // No click → screen red + message
     noBtn.addEventListener('click', () => {
-        noBtn.style.transform = 'scale(0.3)';
+        letter.style.display = 'none';
+        body.style.background = '#ff4d4d';
+        noMessage.style.display = 'block';
     });
 
     // Floating hearts
