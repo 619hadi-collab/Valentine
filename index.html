@@ -19,11 +19,10 @@
   }
 
   .container {
-    text-align: center;
     position: relative;
   }
 
-  /* Envelope */
+  /* Envelope Body */
   .envelope {
     width: 280px;
     height: 190px;
@@ -32,33 +31,36 @@
     border-radius: 14px;
     cursor: pointer;
     box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    overflow: hidden; /* IMPORTANT: keeps letter inside */
   }
 
   .envelope:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 
   .envelope-text {
     position: absolute;
     bottom: 45px;
+    width: 100%;
+    text-align: center;
     font-weight: 600;
     color: #b83280;
     font-size: 18px;
+    z-index: 2;
   }
 
   .envelope-from {
     position: absolute;
     bottom: 18px;
+    width: 100%;
+    text-align: center;
     font-weight: 500;
     color: #9d174d;
     font-size: 14px;
+    z-index: 2;
   }
 
+  /* Flap */
   .flap {
     position: absolute;
     top: 0;
@@ -68,38 +70,37 @@
     border-left: 140px solid transparent;
     border-right: 140px solid transparent;
     border-top: 95px solid #ffc2dc;
-    border-radius: 14px;
     transform-origin: top;
     transition: transform 0.6s ease;
-    z-index: 3;
+    z-index: 5;
   }
 
   .flap.open {
     transform: rotateX(180deg);
   }
 
-  /* Letter Card */
+  /* Letter */
   .letter {
     position: absolute;
     width: 240px;
     height: 160px;
     background: #fff0f6;
     border-radius: 14px;
-    top: 30px;
     left: 20px;
+    bottom: -40px; /* start hidden inside envelope */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: translateY(70px);
-    transition: transform 0.8s cubic-bezier(.22,1,.36,1);
     box-shadow: 0 10px 25px rgba(0,0,0,0.18);
     padding: 18px;
-    z-index: 2;
+    transition: transform 0.9s cubic-bezier(.22,1,.36,1);
+    transform: translateY(0);
+    z-index: 3;
   }
 
   .letter.show {
-    transform: translateY(-140px);
+    transform: translateY(-170px); /* slide out */
   }
 
   .question {
@@ -140,11 +141,9 @@
 <body>
 
 <div class="container">
-
   <div class="envelope" onclick="openLetter()">
+
     <div class="flap" id="flap"></div>
-    <div class="envelope-text">This is for you Maha 💌</div>
-    <div class="envelope-from">From Hadi with love 🌹</div>
 
     <div class="letter" id="letter">
       <div class="question">Will you be my Valentine? 💖</div>
@@ -154,8 +153,10 @@
       </div>
     </div>
 
-  </div>
+    <div class="envelope-text">This is for you Maha 💌</div>
+    <div class="envelope-from">From Hadi with love 🌹</div>
 
+  </div>
 </div>
 
 <script>
@@ -167,7 +168,8 @@
     document.getElementById('flap').classList.add('open');
   }
 
-  document.getElementById('noBtn').addEventListener('click', () => {
+  document.getElementById('noBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
     noScale -= 0.15;
     yesScale += 0.2;
 
@@ -177,7 +179,8 @@
     document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
   });
 
-  document.getElementById('yesBtn').addEventListener('click', () => {
+  document.getElementById('yesBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
     alert('Yayyyy 💖');
   });
 </script>
