@@ -18,7 +18,7 @@
         position: relative;
     }
 
-    /* Pastel floating hearts */
+    /* Floating hearts */
     .heart {
         position: absolute;
         width: 20px;
@@ -43,7 +43,6 @@
         100% { transform: translateY(-100vh) rotate(45deg); }
     }
 
-    /* Container */
     .container {
         text-align: center;
         position: relative;
@@ -57,30 +56,34 @@
         font-size: 20px;
     }
 
-    /* Cute pastel envelope */
+    /* Envelope */
     .envelope {
         width: 220px;
         height: 150px;
         background: #ffd6e8;
+        border-radius: 10px;
         position: relative;
         margin: auto;
         cursor: pointer;
-        border-radius: 10px;
         box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         transition: transform 0.5s;
+        overflow: hidden;
     }
 
+    /* Flap */
     .envelope::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
+        width: 0;
+        height: 0;
         border-left: 110px solid transparent;
         border-right: 110px solid transparent;
         border-bottom: 70px solid #ffb6c1;
-        border-radius: 10px 10px 0 0;
     }
 
+    /* First letter */
     .letter {
         width: 250px;
         height: 200px;
@@ -123,6 +126,29 @@
         color: white;
     }
 
+    /* Final romantic letter */
+    .final-letter {
+        width: 300px;
+        max-width: 90vw;
+        background: #fff0f5;
+        border-radius: 15px;
+        padding: 25px;
+        font-size: 18px;
+        color: #d14f6c;
+        line-height: 1.5;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        display: none;
+        position: relative;
+        text-align: left;
+    }
+
+    .flower {
+        font-size: 30px;
+        display: block;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
 </style>
 </head>
 <body>
@@ -140,6 +166,13 @@
             <button class="no" id="noBtn">No</button>
         </div>
     </div>
+
+    <div class="final-letter" id="finalLetter">
+        <div class="flower">🌸</div>
+        Meri pyari si jaan i love you so much ur my everything and i really love you ur so beautiful and i want you in my life forever and be with me. I'll take care of you and I never want to make you sad or make you feel bad. Ur my precious rose and you deserve all the roses in the world. I love you and thank you for being my valentine. I love you alot. <br><br>
+        With love,<br>
+        Hadi
+    </div>
 </div>
 
 <script>
@@ -147,8 +180,9 @@
     const letter = document.getElementById('letter');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
+    const finalLetter = document.getElementById('finalLetter');
 
-    // Envelope click → show letter
+    // Envelope click → show first letter
     envelope.addEventListener('click', () => {
         envelope.style.transform = 'scale(0)';
         setTimeout(() => {
@@ -159,17 +193,20 @@
         }, 500);
     });
 
-    // Yes button click → grows bigger
+    // Yes click → show final romantic letter
     yesBtn.addEventListener('click', () => {
-        yesBtn.style.transform = 'scale(2)';
-        noBtn.style.transform = 'scale(0)';
-        setTimeout(() => alert("YYAAAY I love you ❤️🌹"), 500);
+        letter.style.transform = 'scale(0)';
+        setTimeout(() => {
+            letter.style.display = 'none';
+            finalLetter.style.display = 'block';
+            finalLetter.style.transform = 'scale(0)';
+            setTimeout(() => finalLetter.style.transform = 'scale(1)', 50);
+        }, 500);
     });
 
-    // No button click → shrinks smaller
+    // No click → shrink the No button
     noBtn.addEventListener('click', () => {
-        noBtn.style.transform = 'scale(0.2)';
-        yesBtn.style.transform = 'scale(1)';
+        noBtn.style.transform = 'scale(0.3)';
     });
 
     // Floating hearts
